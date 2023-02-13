@@ -10,11 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api', ['except' => ['getStudent','addStudent','getAllStudents',"getStudentroll"]]);
+    // }
     public function addStudent(Request $req){
+        $stu=Student::where("form_no",$req->form_no)->first();
+        if($stu !=null){
+            return response()->json([
+                'message'=>"Form Number already used ",
+            ]);
+        }else{
         $student=new Student();
         $student->form_no=$req->form_no;
         $student->added_by= $req->added_by;
@@ -65,6 +71,8 @@ class StudentController extends Controller
             ]);
 
         }
+        }
+
     }
     public function getAllStudents(){
         $stu = Student::with('education')->orderBy('id', 'desc')->get();
@@ -83,6 +91,21 @@ class StudentController extends Controller
     }
     public function getStudent($id){
         $stu = Student::with('education')->where('id',$id)->get()->first();
+        if ($stu == null){
+            return response()->json([
+                "data"=> null,
+                "message"=> "No data"
+            ]);
+
+        }else{
+            return response()->json([
+                "data"=> $stu,
+                "message"=>"data"
+            ]);
+        }
+    }
+    public function getStudentroll($roll){
+        $stu = Student::with('fees')->where('roll',$roll)->get()->first();
         if ($stu == null){
             return response()->json([
                 "data"=> null,

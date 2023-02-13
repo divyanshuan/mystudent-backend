@@ -35,7 +35,8 @@ Route::group([
 ], function () {
     Route::post("/add",[StudentController::class,"addStudent"]);
     Route::get("/getall",[StudentController::class,"getAllStudents"]);
-    Route::get("/get/{id}",[StudentController::class,"getStudent"]);
+    Route::get("/get/{roll}",[StudentController::class,"getStudent"]);
+    Route::get("/getroll/{roll}",[StudentController::class,"getStudentroll"]);
     Route::post("/addfee",[StudentController::class,"addFee"]);
     Route::get("/getfee/{id}",[StudentController::class,"getFee"]);
     Route::get("/me",[UserController::class,"me"]);
