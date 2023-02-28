@@ -15,12 +15,7 @@ class StudentController extends Controller
     //     $this->middleware('auth:api', ['except' => ['getStudent','addStudent','getAllStudents',"getStudentroll"]]);
     // }
     public function addStudent(Request $req){
-        $stu=Student::where("form_no",$req->form_no)->first();
-        if($stu !=null){
-            return response()->json([
-                'message'=>"Form Number already used ",
-            ]);
-        }else{
+       
         $student=new Student();
         $student->form_no=$req->form_no;
         $student->added_by= $req->added_by;
@@ -62,6 +57,7 @@ class StudentController extends Controller
             return response()->json([
                 "message"=>"user added sucessfully ",
                 "rollno"=>$student,
+                'code'=>200
             ]);
 
         }
@@ -71,7 +67,7 @@ class StudentController extends Controller
             ]);
 
         }
-        }
+        
 
     }
     public function getAllStudents(){

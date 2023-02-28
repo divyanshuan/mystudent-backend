@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('form_no')->unique();
+            $table->string('form_no');
             $table->string('roll')->unique();
             $table->string('added_by');
             $table->string('firstname');
