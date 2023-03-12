@@ -39,5 +39,4 @@ Route::group([
     Route::get("/getroll/{roll}",[StudentController::class,"getStudentroll"]);
     Route::post("/addfee",[StudentController::class,"addFee"]);
     Route::get("/getfee/{id}",[StudentController::class,"getFee"]);
-    Route::get("/me",[UserController::class,"me"]);
 });

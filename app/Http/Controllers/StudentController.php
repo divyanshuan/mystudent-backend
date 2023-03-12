@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Education;
 use App\Models\Fee;
 use App\Models\Student;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class StudentController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth:api', ['except' => ['getStudent','addStudent','getAllStudents',"getStudentroll"]]);
-    // }
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ["login"]]);
+    }
     public function addStudent(Request $req){
        
         $student=new Student();
@@ -29,7 +31,8 @@ class StudentController extends Controller
         $image=$req->photo;
         $ext = $image->getClientOriginalExtension();
         $name=$req->firstname."-".$req->batch."-".$req->form_no.".".$ext;
-        $image->storeAs("Student",$name);
+        // $image->storeAs("Student",$name);
+        $image->move(public_path("Student"),$name);
         $student->photopath=$name;
 
         $student->gender= $req->gender;
@@ -137,14 +140,16 @@ class StudentController extends Controller
     }
     public function getFee($id){
         $fee=Fee::where("student_id",$id)->orderByDesc('id')->get();
-        // return $student;
         return response()->json([
             "data"=>$fee,
         ]);
 
     }
+
+
     public function guard()
     {
         return Auth::guard();
     }
+    
 }
